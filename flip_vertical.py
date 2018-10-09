@@ -3,14 +3,19 @@ import cv2
  
 # load the image with imread()
 imageSource = './pic.png'
-img = cv2.imread(imageSource)
+img = cv2.imread(imageSource,cv2.IMREAD_GRAYSCALE)
  
 vertical_img = img.copy()
 # flip img vertically,
 vertical_img = cv2.flip( img, 1 )
- 
-# Laplacian or 2nd derivative                                                                                                                               
+
+# Laplacian or 2nd derivative
 lap= cv2.Laplacian(img,cv2.CV_64F,scale = 1)
+lap += abs(lap.min())
+lap *= 255/lap.max()
+lap = np.array(lap, dtype=np.uint8)
+print img.max(), img.min(),lap.max(), lap.min(), abs(lap.min())
+ 
 #first derivative along x axis                                                                                                                              
 sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
 
