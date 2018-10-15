@@ -1,6 +1,7 @@
 # import the OpenCV package
 import cv2
- 
+import numpy as np
+
 # load the image with imread()
 imageSource = './pic.png'
 img = cv2.imread(imageSource,cv2.IMREAD_GRAYSCALE)
@@ -19,11 +20,16 @@ print img.max(), img.min(),lap.max(), lap.min(), abs(lap.min())
 #first derivative along x axis                                                                                                                              
 sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
 
+#add noise to image 
+noise = img+0.5*img.std()*(np.random.random(img.shape)*2-1)
+
 # display the images on screen with imshow()                                                                                                                
 cv2.imshow( "Original", img )
 cv2.imshow( "Vertical flip", vertical_img )
 cv2.imshow( "Lapalacian", lap )
 cv2.imshow( "Sobelx", sobelx)
+cv2.imshow( "noise added", noise)
+
 
 # wait time in milliseconds                                                                                                                                 
 # this is required to show the image                                                                                                                        
